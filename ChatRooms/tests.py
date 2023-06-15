@@ -113,11 +113,71 @@ class CreateRoomViewTestCase(TestCase):
             'disponibility': True,
         })
 
-        self.assertEqual(response.status_code, 302)  # Se espera una redirección
+        self.assertEqual(response.status_code, 302)  
         self.assertRedirects(response, reverse('room_list'))
 
-        # Verificar que la sala se haya creado en la base de datos
         room = Room.objects.last()
         self.assertEqual(room.name, 'Test Room')
         self.assertEqual(room.disponibility, True)
         self.assertEqual(room.owner, self.user)
+
+class MyRoomsViewTestCase(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(username='testuser', password='testpassword')
+        self.client.login(username='testuser', password='testpassword')
+
+    def test_my_rooms_view(self):
+        #Log in the user
+        self.client.login(username='testuser', password='testpassword')
+
+        response = self.client.get(reverse('my_rooms'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'room_list.html')
+        self.assertContains(response, 'rooms')
+        self.assertQuerysetEqual(response.context['page_obj'], Room.objects.filter(owner=self.user), transform=lambda x: x)
+
+    def test_my_rooms_view_with_query(self):
+        #Log in the user
+        self.client.login(username='testuser', password='testpassword')
+
+        query = 'test'
+        response = self.client.get(reverse('my_rooms'), {'query': query})
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'room_list.html')
+        self.assertContains(response, 'rooms')
+        self.assertQuerysetEqual(response.context['page_obj'], Room.objects.filter(owner=self.user, name__icontains=query), transform=lambda x: x)
+
+class RoomViewTestCase(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_user(username='testuser', password='testpassword')
+        self.room = Room.objects.create(name='Test Room', disponibility=True, owner=self.user)
+    
+    def test_room_view_with_post_request(self):
+        # Log in the user
+        self.client.login(username='testuser', password='testpassword')
+        
+        # Send a POST request to create a new message in the room
+        post_data = {
+            'message': 'Test Message'
+        }
+        response = self.client.post(reverse('room', args=[self.room.id]), data=post_data)
+        
+        # Assert that the response is successful
+        self.assertEqual(response.status_code, 200)
+        
+        # Assert that the message was created and associated with the room
+        self.assertTrue(Message.objects.filter(room=self.room, message='Test Message').exists())
+    
+    def test_room_view_with_get_request(self):
+        #Log in the user
+        self.client.login(username='testuser', password='testpassword')
+        # Send a GET request to view the room
+        response = self.client.get(reverse('room', args=[self.room.id]))
+        
+        # Assert that the response is successful
+        self.assertEqual(response.status_code, 200)
+        
+        # Assert that the correct room and messages are passed to the template context
+        self.assertEqual(response.context['room'], self.room)
+        self.assertQuerysetEqual(response.context['messages'], Message.objects.filter(room=self.room))
