@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+    
+    {% if user.is_authenticated %}
+	{% include 'navbar.html' %}
+    {% endif %}
+    
+    <main class="container">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+
+</body>
+</html>
+

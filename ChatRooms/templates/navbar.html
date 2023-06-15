@@ -1,0 +1,11 @@
+<nav>
+    <img src="" alt="">
+    <a href="{% url / %}">My rooms</a>
+    {{user.name}}
+    {% if user.is_authenticated %}
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Log Out</button>
+        </form>
+    {% endif %}
+</nav>
