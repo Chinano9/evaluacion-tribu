@@ -1,10 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
 from django.core.paginator import Paginator
-from .models import Room
+from .models import Room, Message
 # Create your views here.
 def index(request):
     return render(request,"index.html")
@@ -15,11 +15,14 @@ def login_view(request):
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
+
         if user is not None:
             login(request, user)
+
             return redirect('index')
         else:
             error_message = "username or password are incorrect"
+
             return render(request, 'login.html', {'error_message': error_message})
     else:
         return render(request, 'login.html')
@@ -60,6 +63,7 @@ def room_list(request):
         'page_obj': page_obj,
         'query': query
     }
+
     return render(request, 'room_list.html', context)
 
 @login_required

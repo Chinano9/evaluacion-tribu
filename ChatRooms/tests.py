@@ -2,7 +2,7 @@ from django.test import TestCase, Client
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.contrib.messages import get_messages
-from .models import Room 
+from .models import Room, Message 
 
 class LoginViewTestCase(TestCase):
     def setUp(self):
@@ -33,7 +33,7 @@ class LoginViewTestCase(TestCase):
         }
         response = self.client.post(self.login_url, data)
         self.assertEqual(response.status_code, 200)
-        # Checks if the error message actualy displays
+        
         error_message = response.context['error_message']
         self.assertEqual(error_message, "username or password are incorrect")
         self.assertTemplateUsed(response, 'login.html')
@@ -57,20 +57,20 @@ class RegisterViewTestCase(TestCase):
         response = self.client.post(self.register_url, data)
         self.assertRedirects(response, self.login_url)
 
-        # Verificar que el usuario se haya creado correctamente
+        
         user_exists = User.objects.filter(username='testuser').exists()
         self.assertTrue(user_exists)
 
     def test_register_view_post_failure(self):
         data = {
-            'username': 'caca',  # Campo de nombre de usuario vacío
+            'username': 'caca', 
             'password': ''
         }
         response = self.client.post(self.register_url, data)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'register.html')
 
-        # Verificar que no se haya creado ningún usuario
+        
         user_exists = User.objects.filter(username='testuser').exists()
         self.assertFalse(user_exists)
  
@@ -105,6 +105,7 @@ class CreateRoomViewTestCase(TestCase):
         self.user = User.objects.create_user(username='testuser', password='testpass')
 
     def test_create_room(self):
+        
         self.client.login(username='testuser', password='testpass')
 
         response = self.client.post(reverse('create_room'), {
