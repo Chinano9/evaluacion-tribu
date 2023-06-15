@@ -78,8 +78,39 @@ def create_room(request):
         room = Room(name = name, disponibility = disponibility, owner = request.user)
         room.save()
 
-    return redirect(room_list)
+    return redirect('room_list')
+    
+@login_required
+def room(request, room_id):
+    room = get_object_or_404(Room, id=room_id)
+    messages = Message.objects.filter(room=room)
+    context = {
+        'room': room,
+        'messages': messages
+    }
+
+    if request.method == 'POST':
+        content = request.POST.get('message')
+        user=request.user
+        message = Message(message=content, user=user, room=room)
+        message.save()
+
+    return render(request, "room.html", context)
 
 @login_required
-def room(request):
-    return render(request, "chat.html")
+def my_rooms(request):
+    query = request.GET.get('query')
+    rooms = Room.objects.filter(owner=request.user)
+
+    if query:
+        rooms = rooms.filter(name__icontains=query)
+
+    paginator = Paginator(rooms, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        'page_obj': page_obj,
+        'query': query
+    }
+    return render(request, 'room_list.html', context) 
