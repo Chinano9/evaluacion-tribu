@@ -31,11 +31,14 @@ def register_view(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
+
         if len(username) < 8 or len(password) < 8:
             error_message = "username or password are too short"
             return render(request, 'register.html', {'error_message': error_message})
+
         User.objects.create_user(username=username, password=password)
-        return redirect('login')  # Reemplaza 'login' con el nombre de tu URL de inicio de sesión
+
+        return redirect('login')  
     else:
         return render(request, 'register.html')
 

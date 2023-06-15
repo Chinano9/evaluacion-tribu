@@ -82,18 +82,27 @@ class RoomListViewTestCase(TestCase):
         self.room = Room.objects.create(name='Habitación de prueba', disponibility=True, owner=self.user)
 
     def test_room_list_view_with_delete(self):
+        #Log in the user
+        self.client.login(username='testuser', password='testpassword')
+
         self.client.login(username='testuser', password='testpassword')
         response = self.client.post(reverse('room_list'), {'room_id': self.room.id})
         self.assertEqual(response.status_code, 302)
         self.assertFalse(Room.objects.filter(id=self.room.id).exists())
 
     def test_room_list_view_without_delete(self):
+        #Log in the user
+        self.client.login(username='testuser', password='testpassword')
+
         self.client.login(username='testuser', password='testpassword')
         response = self.client.get(reverse('room_list'))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, self.room.name)
 
     def test_room_list_view_with_admin_delete(self):
+        #Log in the user
+        self.client.login(username='testuser', password='testpassword')
+
         self.client.login(username='admin', password='adminpassword')
         response = self.client.post(reverse('room_list'), {'room_id': self.room.id})
         self.assertEqual(response.status_code, 302)
