@@ -1,0 +1,40 @@
+<!-- room_list.html -->
+
+<h1>Lista de Habitaciones</h1>
+
+<form method="GET" action="{% url 'room_list' %}">
+  <input type="text" name="query" value="{{ query }}" placeholder="Buscar habitaciones">
+  <button type="submit">Buscar</button>
+</form>
+
+{% if page_obj %}
+  {% for room in page_obj %}
+    <div>
+      <h3>{{ room.name }}</h3>
+      {% if room.owner == request.user %}
+        <form method="POST" action="{% url 'room_list' %}">
+          {% csrf_token %}
+          <input type="hidden" name="room_id" value="{{ room.id }}">
+          <button type="submit">Eliminar</button>
+        </form>
+      {% endif %}
+    </div>
+  {% endfor %}
+  {% if page_obj.has_previous or page_obj.has_next %}
+    <div class="pagination">
+      {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+      {% endif %}
+      
+      <span class="current-page">{{ page_obj.number }}</span>
+      
+      {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+      {% endif %}
+    </div>
+  {% endif %}
+
+{% else %}
+  <p>No hay habitaciones disponibles.</p>
+{% endif %}
+
