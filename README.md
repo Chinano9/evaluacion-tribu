@@ -1,22 +1,22 @@
 # Prueba tecnica TribuCo
-El proyecto es un sistema de chat en línea que permite a los usuarios registrados comunicarse a través de salas de chat. Proporciona una interfaz intuitiva y amigable para que los usuarios puedan unirse a salas existentes, crear nuevas salas y participar en conversaciones grupales.
+El proyecto es un sistema de chat en línea que permite a los usuarios registrados comunicarse a través de salas de chat. Proporciona una interfaz para que los usuarios puedan unirse a salas existentes, crear nuevas salas y participar en conversaciones grupales.
 ## Características principales
 
 El proyecto incluye las siguientes características principales:
 
-    Autenticación de usuarios: Los usuarios pueden registrarse, iniciar sesión y cerrar sesión en el sistema. Esto garantiza que solo los usuarios autenticados tengan acceso a las funcionalidades del chat.
+- Autenticación de usuarios: Los usuarios pueden registrarse, iniciar sesión y cerrar sesión en el sistema. Esto garantiza que solo los usuarios autenticados tengan acceso a las funcionalidades del chat.
 
-    Gestión de salas: Los usuarios pueden explorar la lista de salas disponibles, unirse a salas existentes y crear nuevas salas. Cada sala tiene un nombre que los usuarios pueden especificar al crearla.
+- Gestión de salas: Los usuarios pueden explorar la lista de salas disponibles, unirse a salas existentes y crear nuevas salas. Cada sala tiene un nombre que los usuarios pueden especificar al crearla.
 
-    Panel de administración: Existe un panel de administración donde los superusuarios pueden gestionar las salas y los usuarios registrados. Esto incluye la capacidad de eliminar salas, editarlas y cerrarlas si es necesario.
+- Panel de administración: Existe un panel de administración donde los superusuarios pueden gestionar las salas y los usuarios registrados. Esto incluye la capacidad de eliminar salas, editarlas y cerrarlas si es necesario.
 
 ## Tecnologías utilizadas
 
 El proyecto se ha desarrollado utilizando las siguientes tecnologías:
 
-    Django: Un framework web de alto nivel basado en Python, utilizado para el desarrollo del backend del proyecto. Proporciona una estructura sólida y herramientas eficientes para la creación de aplicaciones web.
+- Django: Un framework web de alto nivel basado en Python, utilizado para el desarrollo del backend del proyecto. Proporciona una estructura sólida y herramientas eficientes para la creación de aplicaciones web.
     
-    HTML, CSS y JavaScript: Estas tecnologías se utilizan para la creación de la interfaz de usuario del proyecto. HTML se encarga de la estructura del sitio web, CSS se utiliza para dar estilo y apariencia visual, y JavaScript permite la interactividad y la comunicación en tiempo real con el servidor.
+- HTML, CSS y JavaScript: Estas tecnologías se utilizan para la creación de la interfaz de usuario del proyecto. HTML se encarga de la estructura del sitio web, CSS se utiliza para dar estilo y apariencia visual, y JavaScript permite la interactividad y la comunicación en tiempo real con el servidor.
 
 ## Instalación del proyecto
 
