@@ -1,7 +1,114 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+    *{
+        font-family: Poppins
+    }    
 
+    body{
+        background-image: url("data:image/svg+xml,<svg id='patternId' width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'><defs><pattern id='a' patternUnits='userSpaceOnUse' width='68' height='61.151' patternTransform='scale(1) rotate(30)'><rect x='0' y='0' width='100%' height='100%' fill='hsla(0,0%,100%,1)'/><path d='M113.548 50.575H90.454l-11.547-20 11.547-20h23.094l11.547 20zm-136 0h-23.095l-11.547-20 11.547-20h23.094l11.547 20zm119 30.576H73.452l-11.547-20 11.547-20h23.094l11.547 20zm-34 0H39.452l-11.547-20 11.547-20h23.094l11.547 20zm-34 0H5.452l-11.547-20 11.547-20h23.094l11.547 20zm-34.001 0h-23.094l-11.547-20 11.547-20h23.094l11.547 20zm61.906-30.576h23.094l11.547-20-11.547-20H56.453l-11.547 20zm-10.906 0H22.453l-11.547-20 11.547-20h23.094l11.547 20zm-34 0h-23.094l-11.547-20 11.547-20h23.094l11.547 20zm85-30.575H73.453L61.906 0l11.547-20h23.094l11.547 20zm-34 0H39.453L27.906 0l11.547-20h23.094L74.094 0zm-34 0H5.453L-6.094 0 5.453-20h23.094L40.094 0zm-34 0h-23.094L-40.094 0l11.547-20h23.094L6.094 0z'  stroke-width='0.5' stroke='hsla(0, 0%, 61%, 1)' fill='none'/></pattern></defs><rect width='800%' height='800%' transform='translate(0,-0.302)' fill='url(%23a)'/></svg>")
+    }
+
+    nav{
+        display:flex;
+        justify-content: space-around;
+        margin-bottom: 10px;
+    }
+
+    a{
+        text-decoration: none;
+        color:black;
+    }
+
+    main.container{
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .rooms{
+        background-color: #eee;
+        width: 70%;
+        border-radius: 20px
+    }
+
+    .rooms header{
+        border-bottom: 1px solid black;
+    }
+
+    .rooms .room_list{
+        overflow-y: scroll;
+        height: 700px;
+    }
+
+    .rooms .room_list>*{
+        font-size: 30px
+    }
+
+    .rooms .room_list article{
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .room_list article .room_info{
+        display: flex;
+        justify-content: flex-start;
+        flex-direction: column;
+    }
+
+    .room_list article i{
+        font-size: 15px
+    }
+
+    .room_list article .room_state{
+        display: flex;
+        align-items: center;
+    }
+
+    #avalible, #unavalible{
+        font-size: 25px
+    }
+
+    #avalible{
+        color: lime;
+    }
+
+    #unavalible{
+        color: red;
+    }
+    
+    .pagination{
+        display: flex;
+        justify-content: space-around
+    }
+
+    .pagination>*{
+        font-size: 20px; 
+    }
+
+    .messages{
+        overflow-y:scroll;
+        height: 650px;
+    }
+    .messages ul{
+        margin-bottom: 30px;
+        list-style: none
+    }
+    .rooms>form{
+        height: 50px
+    }
+
+    aside{
+        margin-right: 50px;
+        background-color: #eee;
+        border-radius: 10px;
+        border:1px solid black;
+        width: 20%;
+        height: 300px;
+    }
+
+</style>
 </head>
 <body>
     
