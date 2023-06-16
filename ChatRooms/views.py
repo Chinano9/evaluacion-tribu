@@ -77,8 +77,7 @@ def room_list(request):
 def create_room(request):
     if request.method == 'POST':
         name = request.POST.get('name')
-        disponibility = request.POST.get('disponibility') == 'on'
-
+        disponibility = 'disponibility' in request.POST
         room = Room(name = name, disponibility = disponibility, owner = request.user)
         room.save()
 
@@ -88,7 +87,7 @@ def create_room(request):
 def edit_room(request):
     if request.method == 'POST':
         name = request.POST.get('name')
-        disponibility = request.POST.get('disponibility') == 'on'
+        disponibility = 'disponibility' in request.POST
         room_id = request.POST.get('room_id')
         # gets the room and updates
         room = get_object_or_404(Room, id=room_id)
@@ -114,7 +113,7 @@ def room(request, room_id):
         message = Message(message=content, user=user, room=room)
         message.save()
 
-    if room.disponibility:
+    if room.disponibility or request.user.is_superuser:
         return render(request, "room.html", context)
     return redirect('room_list')
 
