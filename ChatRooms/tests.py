@@ -24,7 +24,7 @@ class LoginViewTestCase(TestCase):
             'password': password
         }
         response = self.client.post(self.login_url, data)
-        self.assertRedirects(response, '/chat/')
+        self.assertRedirects(response, '/chat/rooms/')
 
     def test_login_view_post_failure(self):
         data = {
@@ -37,6 +37,20 @@ class LoginViewTestCase(TestCase):
         error_message = response.context['error_message']
         self.assertEqual(error_message, "username or password are incorrect")
         self.assertTemplateUsed(response, 'login.html')
+
+class LogoutViewTestCase(TestCase):
+    def setUp(self):
+        
+        self.logout_url = reverse('logout')
+        self.user = User.objects.create_user(username='testuser', password='testpassword')
+
+    def test_logout_view(self):
+        self.client.force_login(self.user)
+
+        self.assertTrue(self.user.is_authenticated)
+        response = self.client.post(reverse('logout'))
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('index'))
 
 class RegisterViewTestCase(TestCase):
     def setUp(self):
@@ -119,7 +133,7 @@ class CreateRoomViewTestCase(TestCase):
 
         response = self.client.post(reverse('create_room'), {
             'name': 'Test Room',
-            'disponibility': True,
+            'disponibility': 'on',
         })
 
         self.assertEqual(response.status_code, 302)  
@@ -127,7 +141,7 @@ class CreateRoomViewTestCase(TestCase):
 
         room = Room.objects.last()
         self.assertEqual(room.name, 'Test Room')
-        self.assertEqual(room.disponibility, True)
+        self.assertTrue(room.disponibility)
         self.assertEqual(room.owner, self.user)
 
 class MyRoomsViewTestCase(TestCase):
