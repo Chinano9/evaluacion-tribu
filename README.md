@@ -27,7 +27,7 @@ Sigue los pasos a continuación para instalar y configurar el proyecto en tu ent
 1. **Clonar el repositorio**: Comienza clonando el repositorio del proyecto desde GitHub. Abre una terminal y ejecuta el siguiente comando:
 
    ```
-   git clone <url_del_repositorio>
+   git clone https://github.com/Chinano9/evaluacion-tribu.git
    ```
 
 2. **Crear un entorno virtual**: Se recomienda utilizar un entorno virtual para mantener las dependencias del proyecto aisladas. Navega hasta la carpeta del proyecto clonado y crea un nuevo entorno virtual ejecutando el siguiente comando:
