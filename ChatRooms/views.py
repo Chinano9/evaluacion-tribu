@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
@@ -19,13 +19,17 @@ def login_view(request):
         if user is not None:
             login(request, user)
 
-            return redirect('index')
+            return redirect('room_list')
         else:
             error_message = "username or password are incorrect"
 
             return render(request, 'login.html', {'error_message': error_message})
     else:
         return render(request, 'login.html')
+
+def logout_view(request):
+    logout(request)
+    return redirect('index')
 
 def register_view(request):
     if request.method == 'POST':
@@ -73,13 +77,28 @@ def room_list(request):
 def create_room(request):
     if request.method == 'POST':
         name = request.POST.get('name')
-        disponibility = request.POST.get('disponibility')
+        disponibility = request.POST.get('disponibility') == 'on'
 
         room = Room(name = name, disponibility = disponibility, owner = request.user)
         room.save()
 
     return redirect('room_list')
-    
+
+@login_required
+def edit_room(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        disponibility = request.POST.get('disponibility') == 'on'
+        room_id = request.POST.get('room_id')
+        # gets the room and updates
+        room = get_object_or_404(Room, id=room_id)
+        room.name = name
+        room.disponibility = disponibility
+        if room.owner == request.user or request.user.is_superuser:
+            room.save()
+            return redirect('room_list')    
+    return redirect('room_list')
+
 @login_required
 def room(request, room_id):
     room = get_object_or_404(Room, id=room_id)
@@ -95,7 +114,9 @@ def room(request, room_id):
         message = Message(message=content, user=user, room=room)
         message.save()
 
-    return render(request, "room.html", context)
+    if room.disponibility:
+        return render(request, "room.html", context)
+    return redirect('room_list')
 
 @login_required
 def my_rooms(request):
