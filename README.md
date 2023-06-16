@@ -1,5 +1,7 @@
 # Prueba tecnica TribuCo
 El proyecto es un sistema de chat en línea que permite a los usuarios registrados comunicarse a través de salas de chat. Proporciona una interfaz para que los usuarios puedan unirse a salas existentes, crear nuevas salas y participar en conversaciones grupales.
+No tuve tiempo de gestionar los archivos estaticos, ya que me aparecieron demasiados errores, por lo que utilice las etiquetas embebidas en HTML
+Ademas, no tuve el tiempo suficiente para hacer la pagina 100% responsiva ☹
 ## Características principales
 
 El proyecto incluye las siguientes características principales:
