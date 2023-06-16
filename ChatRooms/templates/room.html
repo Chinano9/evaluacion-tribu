@@ -1,13 +1,32 @@
-<h1>{{ room.name }}</h1>
+{% extends 'base.html' %}
 
-<h2>Mensajes:</h2>
+{% block content %}
+<div class="rooms">
+<header>
+  <h1>{{ room.name }}</h1>
+  <h2>Mensajes:</h2>
+</header>
+<section class='messages'>
 <ul>
   {% for msg in messages %}
-    <li>{{ msg.message }}</li>
+  <li><span class="username">{{msg.user}}: </span>{{ msg.message }}</li>
   {% endfor %}
 </ul>
+</section>
+
 <form method="POST">
   {%csrf_token%}
   <input type="text" name="message" value="" autofocus>
-  <input type="submit">
+  <button type="submit">Enviar</button>
 </form>
+</div>
+{% if user == room.owner or user.is_superuser%}
+  <aside>
+    {% include 'room_edit.html'%}
+  </aside>
+{% endif %}
+<script type="text/javascript">
+const messageBody = document.querySelector('.messages');
+messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
+</script>
+{%endblock%}
