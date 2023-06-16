@@ -1,8 +1,13 @@
-<section>
-    <a href="{% url 'login' %}">Log in</a>
-    <div>
-	<i>Don't have an account?</i>
-        <a href="{% url 'register'%}">Sign up</a>
+{% extends 'base.html'%}
+{% block content %}
+<section id='start'>
+    <div class="content">
+        <a href="{% url 'login' %}">Log in</a>
+        <div>
+	    <i>Don't have an account?</i>
+            <a href="{% url 'register'%}">Sign up</a>
+        </div>
     </div>
 	
 </section>
+{% endblock %}

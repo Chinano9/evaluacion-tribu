@@ -3,7 +3,7 @@
 {% block content %}
 <div class="rooms">
 <header>
-  <h1>{{ room.name }}</h1>
+  <h1><a class='goback' href='{% url 'room_list'%}'>←</a> {{ room.name }}</h1>
   <h2>Mensajes:</h2>
 </header>
 <section class='messages'>
